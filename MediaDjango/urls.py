@@ -18,4 +18,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('products/', include('products.urls')),
+    path('sells/', include('sells.urls')),
 ]

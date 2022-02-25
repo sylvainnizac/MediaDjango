@@ -89,19 +89,3 @@ class IndexViewTests(TestCase):
         self.assertEqual(product_query.name, "updated product")
         self.assertEqual(product_query.price, 4.44)
         self.assertEqual(product_query.stockpile, 33)
-
-    def test_get_all_products(self):
-        """
-        Should return all products in database
-        """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-        prod2 = Product(name="new product 2",price=5.99, stockpile=17)
-        prod2.save()
-
-        response = self.client.get("/products/all_products")
-
-        self.assertEqual(response.status_code, 200)
-
-        result = json.loads(response.content)
-        self.assertEqual(len(result), 2)

@@ -16,14 +16,6 @@ def index(request):
     return render(request, 'products/index.html', context_dict)
 
 
-@require_http_methods(["GET"])
-def all_products(request):
-    all_products_query = Product.objects.all()
-    all_products = serializers.serialize('json', all_products_query)
-
-    return HttpResponse(all_products)
-
-
 @require_http_methods(["DELETE"])
 def delete_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
