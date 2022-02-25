@@ -36,7 +36,6 @@ def delete_product(request, product_id):
 
 @require_http_methods(["POST"])
 def create_product(request):
-    print(request.POST)
     form_data = ProductForm(request.POST)
 
     if form_data.is_valid():
