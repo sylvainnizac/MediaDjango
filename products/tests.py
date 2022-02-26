@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from products.models import Product
 
-class ProductMethodTests(TestCase):
+class ProductModelTests(TestCase):
 
     def test_product_creation(self):
 
@@ -18,7 +18,7 @@ class ProductMethodTests(TestCase):
         self.assertEqual((prod.name == "test"), True)
 
 
-class IndexViewTests(TestCase):
+class ProductsViewsTests(TestCase):
 
     def test_index_view_with_no_products(self):
         """

@@ -12,7 +12,6 @@ function delete_product(it) {
             window.location.reload();
         }
     });
-    
 }
 
 function create_product() {
@@ -32,7 +31,6 @@ function create_product() {
             }
         });
     }
-
 }
 
 function get_update_data(it) {
@@ -50,7 +48,6 @@ function get_update_data(it) {
 function update_product() {
     var formValid = document.getElementById("updateProductForm").checkValidity();
     var idProduct = $('#idProduct')[0].value;
-    console.log($('#idProduct'));
     if (formValid) {
         $.ajax({
             url: 'update_product/' + idProduct,
@@ -65,24 +62,4 @@ function update_product() {
             }
         });
     }
-
 }
-
-$("#update_button").click(function () {
-    //var name = $("#name").val();
-    console.log("here");
-    var update_button = document.getElementById("update_button");
-    console.log(update_button);
-
-    //$("#modal_body").html(str);
-});
-
-
-//$( '#updateProductModal' ).on
-//('show.bs.target' , function(event) {
-//    var button = $(event.relatedTarget); // Button that triggered the modal
-//    var recipient = button.data('product'); // Extract info from data-* attributes
-//    console.log(button)
-//    console.log(recipient)
-//    //$("#hiddeninputfield").val(recipient);
-//})

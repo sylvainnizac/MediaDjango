@@ -1,3 +1,144 @@
+import json
+
 from django.test import TestCase
 
-# Create your tests here.
+from products.models import Product
+from sells.models import Sell
+
+class SellModelTests(TestCase):
+
+    def test_sell_creation(self):
+
+        """
+        Create Sell in db
+        """
+        prod = Product(name="Bananas",price=1.99, stockpile=10)
+        prod.save()
+        sell = Sell(
+            client_name="C. Sanzos",
+            product=prod,
+            unit_price=prod.price,
+            quantity=2
+            )
+        sell.save()
+        self.assertEqual((sell.client_name == "C. Sanzos"), True)
+        self.assertEqual((sell.quantity == 2), True)
+        self.assertEqual((sell.product == prod), True)
+        self.assertEqual((sell.unit_price == 1.99), True)
+
+
+class SellsViewsTests(TestCase):
+
+    def test_index_view_with_no_sells(self):
+        """
+        If no sells exist, an appropriate message should be displayed.
+        """
+        response = self.client.get("/sells/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "There are no sells present.")
+        self.assertQuerysetEqual(response.context["sells"], [])
+
+    def test_index_view_with_sells(self):
+        """
+        If sells exist, they should be displayed.
+        """
+        prod = Product(name="Bananas",price=1.99, stockpile=10)
+        prod.save()
+        sell = Sell(
+            client_name="C. Sanzos",
+            product=prod,
+            unit_price=prod.price,
+            quantity=2
+        )
+        sell.save()
+
+        response = self.client.get("/sells/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Bananas")
+        self.assertContains(response, "C. Sanzos")
+        self.assertEqual(len(response.context["sells"]), 1)
+
+    def test_delete_view(self):
+        """
+        Should delete the sell
+        """
+        prod = Product(name="new product",price=1.99, stockpile=10)
+        prod.save()
+        sell = Sell(
+            client_name="C. Sanzos",
+            product=prod,
+            unit_price=prod.price,
+            quantity=2
+        )
+        sell.save()
+        sell2 = Sell(
+            client_name="Nestor",
+            product=prod,
+            unit_price=prod.price,
+            quantity=4
+        )
+        sell2.save()
+
+        response = self.client.delete("/sells/delete_sell/1")
+
+        self.assertEqual(response.status_code, 200)
+
+        all_sells_query = Sell.objects.all()
+        self.assertEqual(len(all_sells_query), 1)
+
+    def test_create_view(self):
+        """
+        Should create the sell
+        """
+        prod = Product(name="new product",price=1.99, stockpile=10)
+        prod.save()
+        sell = Sell(
+            client_name="C. Sanzos",
+            product=prod,
+            unit_price=prod.price,
+            quantity=2
+        )
+        sell.save()
+
+        response = self.client.post("/sells/create_sell", {"client_name": "Nestor", "quantity": 3, "product": prod.id})
+
+        self.assertEqual(response.status_code, 201)
+
+        all_sells_query = Sell.objects.all()
+        self.assertEqual(len(all_sells_query), 2)
+
+    def test_update_view(self):
+        """
+        Should update the sell
+        """
+        prod = Product(name="new product",price=1.99, stockpile=10)
+        prod.save()
+        prod2 = Product(name="other product",price=5.66, stockpile=20)
+        prod2.save()
+        sell = Sell(
+            client_name="C. Sanzos",
+            product=prod,
+            unit_price=prod.price,
+            quantity=2
+        )
+        sell.save()
+        sell2 = Sell(
+            client_name="Nestor",
+            product=prod,
+            unit_price=prod.price,
+            quantity=4
+        )
+        sell2.save()
+
+        response = self.client.post("/sells/update_sell/1", {"client_name": "Nestor", "quantity": 4, "product": prod2.id})
+
+        self.assertEqual(response.status_code, 201)
+
+        all_sells_query = Sell.objects.all()
+        self.assertEqual(len(all_sells_query), 2)
+        sell_query = Sell.objects.get(id=1)
+        self.assertEqual(sell_query.client_name, "Nestor")
+        self.assertEqual(sell_query.unit_price, 5.66)
+        self.assertEqual(sell_query.quantity, 4)
+        self.assertEqual(sell_query.product, prod2)
