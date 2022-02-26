@@ -11,54 +11,59 @@
 {% endblock %}
 
 {% block body_block %}
-
-        <div class="page-header">
-                <h1>Sells</h1>
-        </div>
-
-        <div class="panel-body center">
+<div class="panel-body center">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="text-right">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSellModal">
-                        Create new sell
+                    Create new sell
                 </button>
-                <table class="table">
-                        <thead>
-                                <tr>
-                                        <th>Client name</th>
-                                        <th>Product</th>
-                                        <th>Unit Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
-                                        <th>Date</th>
-                                        <th>Actions</th>
-                                </tr>
-                        </thead>
-                        <tbody id="table_body">
-                                {% if sells %}
-                                {% for sell in sells %}
-                                <tr>
-                                        <td>{{ sell.client_name }}</td>
-                                        <td>{{ sell.product }}</td>
-                                        <td>{{ sell.unit_price }}</td>
-                                        <td>{{ sell.quantity }}</td>
-                                        <td>{% widthratio sell.quantity 1 sell.unit_price %}</td>
-                                        <td>{{ sell.date|date:"d/m/Y" }}</td>
-                                        <td>
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSellModal"
-                                                        data-bs-id={{sell.id}}
-                                                        data-bs-client-name={{sell.client_name}}
-                                                        data-bs-quantity={{sell.quantity}}
-                                                        data-bs-product={{sell.product.id}}
-                                                        onclick="get_update_data(this);" >Update</button>
-                                                <button type="button" class="btn btn-danger" onclick="delete_sell(this);" data-bs-idSell="{{ sell.id }}">Delete</button>
-                                        </td>
-                                </tr>
-                                {% endfor %}
-                                {% else %}
-                                <strong>{{ empty_message }}</strong>
-                                {% endif %}
-                        </tbody>
-                </table>
+            </div>
         </div>
+    </div>
+    <div class="row mt-1">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Client name</th>
+                        <th>Product</th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table_body">
+                    {% if sells %}
+                    {% for sell in sells %}
+                    <tr>
+                        <td>{{ sell.client_name }}</td>
+                        <td>{{ sell.product }}</td>
+                        <td>{{ sell.unit_price }}</td>
+                        <td>{{ sell.quantity }}</td>
+                        <td>{% widthratio sell.quantity 1 sell.unit_price %}</td>
+                        <td>{{ sell.date|date:"d/m/Y" }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSellModal"
+                                    data-bs-id={{sell.id}}
+                                    data-bs-client-name={{sell.client_name}}
+                                    data-bs-quantity={{sell.quantity}}
+                                    data-bs-product={{sell.product.id}}
+                                    onclick="get_update_data(this);" >Update</button>
+                            <button type="button" class="btn btn-danger" onclick="delete_sell(this);" data-bs-idSell="{{ sell.id }}">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <strong>{{ empty_message }}</strong>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
