@@ -1,5 +1,5 @@
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
@@ -16,8 +16,10 @@ def index(request):
         main page to display and manage products
     """
     all_products = Product.objects.all()
+    form = ProductForm()
 
     context_dict = {"products": all_products,
+                    "form": form,
                     "empty_message": _("There are no products present.")}
 
     return render(request, 'products/index.html', context_dict)
@@ -59,7 +61,7 @@ def create_product(request):
 
 
 @login_required
-@require_http_methods(["POST"])
+@require_http_methods(["PATCH"])
 def update_product(request, product_id):
     """
         update product from form
@@ -67,8 +69,12 @@ def update_product(request, product_id):
             200 if OK
             400 if error in update
     """
+    # get original object
     product = get_object_or_404(Product, id=product_id)
-    form = ProductForm(request.POST or None, instance=product)
+    # transform patch data
+    query_dict = QueryDict(request.body)
+    # update original object
+    form = ProductForm(query_dict or None, instance=product)
     if form.is_valid():
         form.save()
         return HttpResponse(status=201)

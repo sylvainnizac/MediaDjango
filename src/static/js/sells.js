@@ -35,7 +35,7 @@ function update_sell() {
     if (formValid) {
         $.ajax({
             url: "update_sell/" + idSell,
-            type: "post",
+            type: "patch",
             headers: {"X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value},
             dataType: "text",
             data:  $("form#updateSellForm").serialize(),

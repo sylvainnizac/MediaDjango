@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
@@ -47,7 +47,7 @@ def create_sell(request):
 
 
 @login_required
-@require_http_methods(["POST"])
+@require_http_methods(["PATCH"])
 def update_sell(request, sell_id):
     """
         update sell from form
@@ -55,8 +55,13 @@ def update_sell(request, sell_id):
             200 if OK
             400 if error in update
     """
+    # get original object
     sell = get_object_or_404(Sell, id=sell_id)
-    form = SellForm(request.POST or None, instance=sell)
+    # transform patch data
+    query_dict = QueryDict(request.body)
+    # update original object
+    form = SellForm(query_dict or None, instance=sell)
+
     if form.is_valid():
         updated_sell = form.save()
         # unit_price is extracted from product to keep sell total price constant even if product price changes

@@ -35,14 +35,14 @@ function create_product() {
 
 function get_update_data(it) {
     var idProduct = it.getAttribute('data-id');
-    var nameProduct = it.getAttribute('data-name');
-    var priceProduct = it.getAttribute('data-price');
-    var stockProduct = it.getAttribute('data-stock');
+    var name = it.getAttribute('data-name');
+    var price = it.getAttribute('data-price');
+    var stock = it.getAttribute('data-stock');
     var modalBody = $('#updateProductModal');
     modalBody.find('#idProduct')[0].value = idProduct;
-    modalBody.find('#name')[0].value = nameProduct;
-    modalBody.find('#price')[0].value = priceProduct;
-    modalBody.find('#stockpile')[0].value = stockProduct;
+    modalBody.find('#id_name')[0].value = name;
+    modalBody.find('#id_price')[0].value = price;
+    modalBody.find('#id_stockpile')[0].value = stock;
 }
 
 function update_product() {
@@ -51,7 +51,7 @@ function update_product() {
     if (formValid) {
         $.ajax({
             url: 'update_product/' + idProduct,
-            type: 'post',
+            type: 'patch',
             headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
             dataType: 'text',
             data:  $('form#updateProductForm').serialize(),
