@@ -9,11 +9,7 @@ def index(request):
         main page to display login form
     """
 
-    context_dict = {
-        # "sells": all_sells,
-        # "form": form,
-        # "empty_message": _("There are no sells present.")
-    }
+    context_dict = {}
 
     return render(request, 'users/index.html', context_dict)
 
@@ -32,12 +28,11 @@ def login_view(request):
     if user:
         if user.is_active:
             login(request, user)
-            return HttpResponse('/sells/')
+            return HttpResponse('/sells/', status=200)
         else:
-            return HttpResponse("Your account is disabled.")
+            return HttpResponse("Your account is disabled.", status=403)
     else:
-        print("Invalid login details: {0}, {1}".format(username, password))
-        return HttpResponse("Invalid login details supplied.")
+        return HttpResponse("Invalid login details supplied.", status=401)
 
 
 @require_http_methods(["GET"])

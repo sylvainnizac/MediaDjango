@@ -1,4 +1,4 @@
-import json
+from urllib.parse import urlencode
 
 from django.test import TestCase
 
@@ -28,6 +28,11 @@ class SellModelTests(TestCase):
 
 
 class SellsViewsTests(TestCase):
+
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.response = self.client.login(username='joe', password='bar')
 
     def test_index_view_with_no_sells(self):
         """
@@ -131,7 +136,7 @@ class SellsViewsTests(TestCase):
         )
         sell2.save()
 
-        response = self.client.post("/sells/update_sell/1", {"client_name": "Nestor", "quantity": 4, "product": prod2.id})
+        response = self.client.patch("/sells/update_sell/1", urlencode({"client_name": "Nestor", "quantity": 4, "product": prod2.id}), content_type="text")
 
         self.assertEqual(response.status_code, 201)
 

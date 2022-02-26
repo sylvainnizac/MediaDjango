@@ -39,7 +39,7 @@ def delete_product(request, product_id):
     if product:
         Product.objects.filter(id=product_id).delete()
 
-    return HttpResponse(status=201)
+    return HttpResponse(status=200)
 
 
 @login_required
