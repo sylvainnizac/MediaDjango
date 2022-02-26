@@ -2,10 +2,14 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 
 from sells.forms import SellForm
 from sells.models import Sell
 
+
+@login_required
+@require_http_methods(["GET"])
 def index(request):
     """
         main page to display and manage sells
@@ -22,6 +26,7 @@ def index(request):
     return render(request, 'sells/index.html', context_dict)
 
 
+@login_required
 @require_http_methods(["POST"])
 def create_sell(request):
     """
@@ -41,6 +46,7 @@ def create_sell(request):
         return HttpResponse(form.errors.as_json(), status=400)
 
 
+@login_required
 @require_http_methods(["POST"])
 def update_sell(request, sell_id):
     """
@@ -61,6 +67,7 @@ def update_sell(request, sell_id):
         return HttpResponse(form.errors.as_json(), status=400)
 
 
+@login_required
 @require_http_methods(["DELETE"])
 def delete_sell(request, sell_id):
     """

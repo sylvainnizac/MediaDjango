@@ -5,7 +5,6 @@
 {% block title %}Sells{% endblock %}
 
 {% block static %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="{% static "js/sells.js" %}"></script>
 {% csrf_token %}
 {% endblock %}
@@ -15,7 +14,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="text-right">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSellModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createSellModal">
                     Create new sell
                 </button>
             </div>
@@ -46,13 +45,13 @@
                         <td>{% widthratio sell.quantity 1 sell.unit_price %}</td>
                         <td>{{ sell.date|date:"d/m/Y" }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateSellModal"
-                                    data-bs-id={{sell.id}}
-                                    data-bs-client-name={{sell.client_name}}
-                                    data-bs-quantity={{sell.quantity}}
-                                    data-bs-product={{sell.product.id}}
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateSellModal"
+                                    data-id={{sell.id}}
+                                    data-client-name={{sell.client_name}}
+                                    data-quantity={{sell.quantity}}
+                                    data-product={{sell.product.id}}
                                     onclick="get_update_data(this);" >Update</button>
-                            <button type="button" class="btn btn-danger" onclick="delete_sell(this);" data-bs-idSell="{{ sell.id }}">Delete</button>
+                            <button type="button" class="btn btn-danger" onclick="delete_sell(this);" data-idSell="{{ sell.id }}">Delete</button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -73,7 +72,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createSellModalLabel">Create Sell</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="createSellForm">
@@ -92,7 +91,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="create_sell()">Create</button>
             </div>
         </div>
@@ -104,7 +103,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="updateSellModalLabel">Update Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <input type="number" id="idSell" hidden/>
@@ -129,7 +128,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="update_sell();">Update</button>
             </div>
         </div>

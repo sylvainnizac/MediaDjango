@@ -18,10 +18,10 @@ function create_sell() {
 }
 
 function get_update_data(it) {
-    var idSell = it.getAttribute("data-bs-id");
-    var clientName = it.getAttribute("data-bs-client-name");
-    var idProduct = it.getAttribute("data-bs-product");
-    var quantity = it.getAttribute("data-bs-quantity");
+    var idSell = it.getAttribute("data-id");
+    var clientName = it.getAttribute("data-client-name");
+    var idProduct = it.getAttribute("data-product");
+    var quantity = it.getAttribute("data-quantity");
     var modalBody = $("#updateSellModal");
     modalBody.find("#idSell")[0].value = idSell;
     modalBody.find("#id_client_name")[0].value = clientName;
@@ -49,7 +49,7 @@ function update_sell() {
 }
 
 function delete_sell(it) {
-    var idSell = it.getAttribute("data-bs-idSell");
+    var idSell = it.getAttribute("data-idSell");
     $.ajax({
         url: "delete_sell/" + idSell,
         type: "DELETE",

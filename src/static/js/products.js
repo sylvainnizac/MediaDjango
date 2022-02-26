@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function delete_product(it) {
-    var idProduct = it.getAttribute('data-bs-idProduct');
+    var idProduct = it.getAttribute('data-idProduct');
     $.ajax({
         url: 'delete_product/' + idProduct,
         type: 'DELETE',
@@ -34,10 +34,10 @@ function create_product() {
 }
 
 function get_update_data(it) {
-    var idProduct = it.getAttribute('data-bs-id');
-    var nameProduct = it.getAttribute('data-bs-name');
-    var priceProduct = it.getAttribute('data-bs-price');
-    var stockProduct = it.getAttribute('data-bs-stock');
+    var idProduct = it.getAttribute('data-id');
+    var nameProduct = it.getAttribute('data-name');
+    var priceProduct = it.getAttribute('data-price');
+    var stockProduct = it.getAttribute('data-stock');
     var modalBody = $('#updateProductModal');
     modalBody.find('#idProduct')[0].value = idProduct;
     modalBody.find('#name')[0].value = nameProduct;

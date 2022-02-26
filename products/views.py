@@ -3,10 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 
 from products.forms import ProductForm
 from products.models import Product
 
+
+@login_required
+@require_http_methods(["GET"])
 def index(request):
     """
         main page to display and manage products
@@ -19,6 +23,7 @@ def index(request):
     return render(request, 'products/index.html', context_dict)
 
 
+@login_required
 @require_http_methods(["DELETE"])
 def delete_product(request, product_id):
     """
@@ -35,6 +40,7 @@ def delete_product(request, product_id):
     return HttpResponse(status=201)
 
 
+@login_required
 @require_http_methods(["POST"])
 def create_product(request):
     """
@@ -52,6 +58,7 @@ def create_product(request):
         return HttpResponse(form_data.errors.as_json(), status=400)
 
 
+@login_required
 @require_http_methods(["POST"])
 def update_product(request, product_id):
     """
