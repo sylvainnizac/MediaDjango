@@ -10,10 +10,6 @@ create your virtual environment and install dependencies
     source venv/bin/activate
     pip install -r requirements.txt
 
-or use then virtual environment already in the project
-
-    source venv/bin/activate
-
 then create database and load the initial datas
 
     python manage.py migrate
