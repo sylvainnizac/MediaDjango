@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.db import models
-from products.models import Product
+from src.products.models import Product
 
 class Sell(models.Model):
     client_name = models.CharField(max_length=128)

@@ -2,8 +2,8 @@ from urllib.parse import urlencode
 
 from django.test import TestCase
 
-from products.models import Product
-from sells.models import Sell
+from src.products.models import Product
+from src.sells.models import Sell
 
 class SellModelTests(TestCase):
 

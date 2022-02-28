@@ -2,7 +2,7 @@ from urllib.parse import urlencode
 
 from django.test import TestCase
 
-from products.models import Product
+from src.products.models import Product
 
 class ProductModelTests(TestCase):
 

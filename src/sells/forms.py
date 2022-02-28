@@ -1,6 +1,6 @@
 from django import forms
-from products.models import Product
-from sells.models import Sell
+from src.products.models import Product
+from src.sells.models import Sell
 
 
 class SellForm(forms.ModelForm):

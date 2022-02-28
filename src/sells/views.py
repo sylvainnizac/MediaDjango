@@ -4,8 +4,8 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
-from sells.forms import SellForm
-from sells.models import Sell
+from src.sells.forms import SellForm
+from src.sells.models import Sell
 
 
 @login_required

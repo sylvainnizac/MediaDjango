@@ -5,8 +5,8 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
-from products.forms import ProductForm
-from products.models import Product
+from src.products.forms import ProductForm
+from src.products.models import Product
 
 
 @login_required

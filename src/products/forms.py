@@ -1,5 +1,5 @@
 from django import forms
-from products.models import Product
+from src.products.models import Product
 
 
 class ProductForm(forms.ModelForm):
