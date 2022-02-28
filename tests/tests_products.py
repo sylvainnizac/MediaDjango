@@ -20,15 +20,16 @@ class ProductModelTests(TestCase):
 
 class ProductsViewsTests(TestCase):
 
-    fixtures = ['users.json']
+    fixtures = ["users.json", "products.json"]
 
     def setUp(self):
-        self.response = self.client.login(username='joe', password='bar')
+        self.response = self.client.login(username="joe", password="bar")
 
     def test_index_view_with_no_products(self):
         """
         If no products exist, an appropriate message should be displayed.
         """
+        Product.objects.all().delete()
         response = self.client.get("/products/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "There are no products present.")
@@ -38,24 +39,16 @@ class ProductsViewsTests(TestCase):
         """
         If no products exist, an appropriate message should be displayed.
         """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-
         response = self.client.get("/products/")
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "new product")
-        self.assertEqual(len(response.context["products"]), 1)
+        self.assertEqual(len(response.context["products"]), 2)
 
     def test_delete_view(self):
         """
         Should delete the product
         """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-        prod2 = Product(name="new product 2",price=5.99, stockpile=17)
-        prod2.save()
-
         response = self.client.delete("/products/delete_product/1")
 
         self.assertEqual(response.status_code, 200)
@@ -67,29 +60,23 @@ class ProductsViewsTests(TestCase):
         """
         Should create the product
         """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-
         response = self.client.post("/products/create_product", {"name": "created product", "price": 4.44, "stockpile": 33})
 
         self.assertEqual(response.status_code, 201)
 
         all_products_query = Product.objects.all()
-        self.assertEqual(len(all_products_query), 2)
+        self.assertEqual(len(all_products_query), 3)
 
     def test_update_view(self):
         """
         Should update the product
         """
-        prod = Product(name="product",price=1.99, stockpile=10)
-        prod.save()
-
         response = self.client.patch("/products/update_product/1", urlencode({"name": "updated product", "price": 4.44, "stockpile": 33}), content_type="text")
 
         self.assertEqual(response.status_code, 201)
 
         all_products_query = Product.objects.all()
-        self.assertEqual(len(all_products_query), 1)
+        self.assertEqual(len(all_products_query), 2)
         product_query = Product.objects.get(id=1)
         self.assertEqual(product_query.name, "updated product")
         self.assertEqual(product_query.price, 4.44)

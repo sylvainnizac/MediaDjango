@@ -29,15 +29,16 @@ class SellModelTests(TestCase):
 
 class SellsViewsTests(TestCase):
 
-    fixtures = ['users.json']
+    fixtures = ["users.json", "products.json", "sells.json"]
 
     def setUp(self):
-        self.response = self.client.login(username='joe', password='bar')
+        self.response = self.client.login(username="joe", password="bar")
 
     def test_index_view_with_no_sells(self):
         """
         If no sells exist, an appropriate message should be displayed.
         """
+        Sell.objects.all().delete()
         response = self.client.get("/sells/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "There are no sells present.")
@@ -47,44 +48,19 @@ class SellsViewsTests(TestCase):
         """
         If sells exist, they should be displayed.
         """
-        prod = Product(name="Bananas",price=1.99, stockpile=10)
-        prod.save()
-        sell = Sell(
-            client_name="C. Sanzos",
-            product=prod,
-            unit_price=prod.price,
-            quantity=2
-        )
-        sell.save()
-
         response = self.client.get("/sells/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Bananas")
-        self.assertContains(response, "C. Sanzos")
-        self.assertEqual(len(response.context["sells"]), 1)
+        self.assertContains(response, "apple")
+        self.assertContains(response, "orange")
+        self.assertContains(response, "Dupont")
+        self.assertContains(response, "Dupond")
+        self.assertEqual(len(response.context["sells"]), 2)
 
     def test_delete_view(self):
         """
         Should delete the sell
         """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-        sell = Sell(
-            client_name="C. Sanzos",
-            product=prod,
-            unit_price=prod.price,
-            quantity=2
-        )
-        sell.save()
-        sell2 = Sell(
-            client_name="Nestor",
-            product=prod,
-            unit_price=prod.price,
-            quantity=4
-        )
-        sell2.save()
-
         response = self.client.delete("/sells/delete_sell/1")
 
         self.assertEqual(response.status_code, 200)
@@ -96,47 +72,18 @@ class SellsViewsTests(TestCase):
         """
         Should create the sell
         """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-        sell = Sell(
-            client_name="C. Sanzos",
-            product=prod,
-            unit_price=prod.price,
-            quantity=2
-        )
-        sell.save()
-
-        response = self.client.post("/sells/create_sell", {"client_name": "Nestor", "quantity": 3, "product": prod.id})
+        response = self.client.post("/sells/create_sell", {"client_name": "Nestor", "quantity": 3, "product": 1})
 
         self.assertEqual(response.status_code, 201)
 
         all_sells_query = Sell.objects.all()
-        self.assertEqual(len(all_sells_query), 2)
+        self.assertEqual(len(all_sells_query), 3)
 
     def test_update_view(self):
         """
         Should update the sell
         """
-        prod = Product(name="new product",price=1.99, stockpile=10)
-        prod.save()
-        prod2 = Product(name="other product",price=5.66, stockpile=20)
-        prod2.save()
-        sell = Sell(
-            client_name="C. Sanzos",
-            product=prod,
-            unit_price=prod.price,
-            quantity=2
-        )
-        sell.save()
-        sell2 = Sell(
-            client_name="Nestor",
-            product=prod,
-            unit_price=prod.price,
-            quantity=4
-        )
-        sell2.save()
-
-        response = self.client.patch("/sells/update_sell/1", urlencode({"client_name": "Nestor", "quantity": 4, "product": prod2.id}), content_type="text")
+        response = self.client.patch("/sells/update_sell/1", urlencode({"client_name": "Nestor", "quantity": 4, "product": 2}), content_type="text")
 
         self.assertEqual(response.status_code, 201)
 
@@ -144,6 +91,6 @@ class SellsViewsTests(TestCase):
         self.assertEqual(len(all_sells_query), 2)
         sell_query = Sell.objects.get(id=1)
         self.assertEqual(sell_query.client_name, "Nestor")
-        self.assertEqual(sell_query.unit_price, 5.66)
+        self.assertEqual(sell_query.unit_price, 2.00)
         self.assertEqual(sell_query.quantity, 4)
-        self.assertEqual(sell_query.product, prod2)
+        self.assertEqual(sell_query.product.id, 2)

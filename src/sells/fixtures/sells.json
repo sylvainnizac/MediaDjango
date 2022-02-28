@@ -1,0 +1,1 @@
+[{"model": "sells.sell", "pk": 1, "fields": {"client_name": "Dupond", "date": "2022-02-28", "product": 1, "quantity": 10, "unit_price": 1.0}}, {"model": "sells.sell", "pk": 2, "fields": {"client_name": "Dupont", "date": "2022-02-28", "product": 2, "quantity": 15, "unit_price": 2.0}}]
