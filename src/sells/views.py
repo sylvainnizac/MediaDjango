@@ -1,6 +1,5 @@
 from django.http import HttpResponse, QueryDict
 from django.shortcuts import get_object_or_404, render
-from django.utils.translation import gettext as _
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 
@@ -20,7 +19,7 @@ def index(request):
     context_dict = {
         "sells": all_sells,
         "form": form,
-        "empty_message": _("There are no sells present.")
+        "empty_message": "There are no sells present."
     }
 
     return render(request, 'sells/index.html', context_dict)
@@ -32,7 +31,7 @@ def create_sell(request):
     """
         create new sell from form
         returns
-            200 if OK
+            201 if OK
             400 if error in creation
     """
     form = SellForm(request.POST)
@@ -53,6 +52,7 @@ def update_sell(request, sell_id):
         update sell from form
         returns
             200 if OK
+            404 if sell to update doesn't exist
             400 if error in update
     """
     # get original object
@@ -67,7 +67,7 @@ def update_sell(request, sell_id):
         # unit_price is extracted from product to keep sell total price constant even if product price changes
         updated_sell.unit_price = updated_sell.product.price
         updated_sell.save()
-        return HttpResponse(status=201)
+        return HttpResponse(status=200)
     else:
         return HttpResponse(form.errors.as_json(), status=400)
 
@@ -79,11 +79,11 @@ def delete_sell(request, sell_id):
         delete sell from id
         returns
             200 if OK
-            404 if sell doesn't exist
+            404 if sell to delete doesn't exist
     """
     sell = get_object_or_404(Sell, id=sell_id)
 
     if sell:
         Sell.objects.filter(id=sell_id).delete()
 
-    return HttpResponse("Deleted")
+    return HttpResponse(status=200)

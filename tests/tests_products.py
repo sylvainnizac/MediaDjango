@@ -73,7 +73,7 @@ class ProductsViewsTests(TestCase):
         """
         response = self.client.patch("/products/update_product/1", urlencode({"name": "updated product", "price": 4.44, "stockpile": 33}), content_type="text")
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
 
         all_products_query = Product.objects.all()
         self.assertEqual(len(all_products_query), 2)

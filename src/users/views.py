@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
 
+
 @require_http_methods(["GET"])
 def index(request):
     """
@@ -18,6 +19,10 @@ def index(request):
 def login_view(request):
     """
         check credentials and log user
+        returns
+            200 if OK
+            403 if account actually disabled
+            401 if credentials are invalids
     """
 
     username = request.POST.get('username')
@@ -32,7 +37,7 @@ def login_view(request):
         else:
             return HttpResponse("Your account is disabled.", status=403)
     else:
-        return HttpResponse("Invalid login details supplied.", status=401)
+        return HttpResponse("Invalid login and/or password supplied.", status=401)
 
 
 @require_http_methods(["GET"])

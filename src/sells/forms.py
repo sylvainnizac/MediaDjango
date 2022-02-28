@@ -4,6 +4,9 @@ from src.sells.models import Sell
 
 
 class SellForm(forms.ModelForm):
+    """
+        form used in sell creation and update
+    """
 
     def __init__(self, *args, **kwargs):
         super(SellForm, self).__init__(*args, **kwargs)
