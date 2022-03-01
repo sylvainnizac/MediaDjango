@@ -1,14 +1,15 @@
 # how to start the project
 
-create your virtual environment and install dependencies
+create your virtual environment
 
     python -m venv venv
     source venv/bin/activate
-    pip install -r requirements.txt
-    
-install node and npm depending on your system => https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
-and install dependencies through npm
+install backend dependencies through pip
+
+    pip install -r requirements.txt
+
+and install frontend dependencies through npm
 
     npm install --no-save
 
