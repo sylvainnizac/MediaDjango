@@ -19,13 +19,17 @@ then create database and load the initial datas
     python manage.py migrate
     python manage.py loaddata db.json
 
+create user
+
+    python manage.py createsuperuser --username=username --email=email@example.com
+
 now you can start the server
 
     python manage.py runserver
 
 go to http://127.0.0.1:8000/
 
-and log in with username "joe" and password "bar"
+and log in with your username and password
 
 # how to start the tests
 

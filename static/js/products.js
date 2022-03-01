@@ -1,54 +1,34 @@
 $("#createProductForm").submit(function(e) {
     e.preventDefault();
-    var formValid = document.getElementById("createProductForm").checkValidity();
-   if (formValid) {
-       $.ajax({
-           url: 'create_product',
-           type: 'post',
-           headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
-           dataType: 'text',
-           data:  $('form#createProductForm').serialize(),
-           success: function() {
-               $('#createProductModal').modal('hide');
-               document.getElementById("createProductForm").reset();
-               window.location.reload();
-            }
-        });
-    } else {
-        var errorMsgArea = document.getElementById("error_msg_create");
-        var textToAdd = document.createTextNode("You need to add a name to your product.");
-        if (errorMsgArea.hasChildNodes()) {
-            errorMsgArea.removeChild(errorMsgArea.lastChild);
-        }
-        errorMsgArea.appendChild(textToAdd);
-    }
+    $.ajax({
+        url: 'create_product',
+        type: 'post',
+        headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        dataType: 'text',
+        data:  $('form#createProductForm').serialize(),
+        success: function() {
+            $('#createProductModal').modal('hide');
+            document.getElementById("createProductForm").reset();
+            window.location.reload();
+         }
+     });
 });
 
 $("#updateProductForm").submit(function(e) {
     e.preventDefault();
-    var formValid = document.getElementById("updateProductForm").checkValidity();
     var idProduct = $('#idProductUpdate')[0].value;
-    if (formValid) {
-        $.ajax({
-            url: 'update_product/' + idProduct,
-            type: 'patch',
-            headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
-            dataType: 'text',
-            data:  $('form#updateProductForm').serialize(),
-            success: function() {
-                $('#updateProductModal').modal('hide');
-                document.getElementById("updateProductForm").reset();
-                window.location.reload();
-            }
-        });
-    } else {
-        var errorMsgArea = document.getElementById("error_msg_update");
-        var textToAdd = document.createTextNode("You can't leave a product without name.");
-        if (errorMsgArea.hasChildNodes()) {
-            errorMsgArea.removeChild(errorMsgArea.lastChild);
+    $.ajax({
+        url: 'update_product/' + idProduct,
+        type: 'patch',
+        headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        dataType: 'text',
+        data:  $('form#updateProductForm').serialize(),
+        success: function() {
+            $('#updateProductModal').modal('hide');
+            document.getElementById("updateProductForm").reset();
+            window.location.reload();
         }
-        errorMsgArea.appendChild(textToAdd);
-    }
+    });
 });
 
 function get_delete_data(it) {
