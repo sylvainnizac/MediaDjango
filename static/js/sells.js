@@ -1,6 +1,6 @@
-function create_sell() {
+$("#createSellForm").submit(function(e) {
+    e.preventDefault();
     var formValid = document.getElementById("createSellForm").checkValidity();
-
     if (formValid) {
         $.ajax({
             url: "create_sell",
@@ -22,21 +22,10 @@ function create_sell() {
         }
         errorMsgArea.appendChild(textToAdd);
     }
-}
+});
 
-function get_update_data(it) {
-    var idSell = it.getAttribute("data-id");
-    var clientName = it.getAttribute("data-client-name");
-    var idProduct = it.getAttribute("data-product");
-    var quantity = it.getAttribute("data-quantity");
-    var modalBody = $("#updateSellModal");
-    modalBody.find("#idSellUpdate")[0].value = idSell;
-    modalBody.find("#id_client_name")[0].value = clientName;
-    modalBody.find("#id_product")[0].value = idProduct;
-    modalBody.find("#id_quantity")[0].value = quantity;
-}
-
-function update_sell() {
+$("#updateSellForm").submit(function(e) {
+    e.preventDefault();
     var formValid = document.getElementById("updateSellForm").checkValidity();
     var idSell = $("#idSellUpdate")[0].value;
     if (formValid) {
@@ -60,6 +49,18 @@ function update_sell() {
         }
         errorMsgArea.appendChild(textToAdd);
     }
+});
+
+function get_update_data(it) {
+    var idSell = it.getAttribute("data-id");
+    var clientName = it.getAttribute("data-client-name");
+    var idProduct = it.getAttribute("data-product");
+    var quantity = it.getAttribute("data-quantity");
+    var modalBody = $("#updateSellModal");
+    modalBody.find("#idSellUpdate")[0].value = idSell;
+    modalBody.find("#id_client_name")[0].value = clientName;
+    modalBody.find("#id_product")[0].value = idProduct;
+    modalBody.find("#id_quantity")[0].value = quantity;
 }
 
 function get_delete_data(it) {

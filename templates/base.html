@@ -15,10 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{% static "/css/starter-template.css" %}">
-
-    <script src="{% static "js/main.js" %}"></script>
-    {% block static %}{% endblock %}
-  </head>
+    </head>
 
   <body>
 
@@ -62,5 +59,7 @@
 <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static '@popperjs/core/dist/umd/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+{% block static %}{% endblock %}
   </body>
 </html>
