@@ -10,7 +10,7 @@ class SellForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SellForm, self).__init__(*args, **kwargs)
-        self.fields["product"]=forms.ModelChoiceField(queryset=Product.objects.all())
+        self.fields["product"]=forms.ModelChoiceField(queryset=Product.objects.filter(can_be_sold=True).all())
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 

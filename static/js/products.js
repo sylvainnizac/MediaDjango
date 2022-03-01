@@ -46,11 +46,17 @@ function get_update_data(it) {
     var name = it.getAttribute('data-name');
     var price = it.getAttribute('data-price');
     var stock = it.getAttribute('data-stock');
+    var canBeSold = it.getAttribute('data-canBeSold');
     var modalBody = $('#updateProductModal');
     modalBody.find('#idProductUpdate')[0].value = idProduct;
     modalBody.find('#id_name')[0].value = name;
     modalBody.find('#id_price')[0].value = price;
     modalBody.find('#id_stockpile')[0].value = stock;
+    if (canBeSold === "True") {
+        modalBody.find('#id_can_be_sold')[0].checked = true;
+    } else if (canBeSold === "False") {
+        modalBody.find('#id_can_be_sold')[0].checked = false;
+    }
 }
 
 function update_product() {
