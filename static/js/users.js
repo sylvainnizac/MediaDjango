@@ -13,9 +13,12 @@ function login() {
                 document.getElementById("logInForm").reset();
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                var parElement = document.getElementById("error_msg");
-                var textToAdd = document. createTextNode(xhr.responseText);
-                parElement. appendChild(textToAdd);
+                var errorMsgArea = document.getElementById("error_msg");
+                var textToAdd = document.createTextNode(xhr.responseText);
+                if (errorMsgArea.hasChildNodes()) {
+                    errorMsgArea.removeChild(errorMsgArea.lastChild);
+                }
+                errorMsgArea.appendChild(textToAdd);
             }
         });
     }

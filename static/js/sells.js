@@ -14,6 +14,13 @@ function create_sell() {
                 window.location.reload();
             }
         });
+    } else {
+        var errorMsgArea = document.getElementById("error_msg_create");
+        var textToAdd = document.createTextNode("You need to add a name and a product to your sell.");
+        if (errorMsgArea.hasChildNodes()) {
+            errorMsgArea.removeChild(errorMsgArea.lastChild);
+        }
+        errorMsgArea.appendChild(textToAdd);
     }
 }
 
@@ -23,7 +30,7 @@ function get_update_data(it) {
     var idProduct = it.getAttribute("data-product");
     var quantity = it.getAttribute("data-quantity");
     var modalBody = $("#updateSellModal");
-    modalBody.find("#idSell")[0].value = idSell;
+    modalBody.find("#idSellUpdate")[0].value = idSell;
     modalBody.find("#id_client_name")[0].value = clientName;
     modalBody.find("#id_product")[0].value = idProduct;
     modalBody.find("#id_quantity")[0].value = quantity;
@@ -31,7 +38,7 @@ function get_update_data(it) {
 
 function update_sell() {
     var formValid = document.getElementById("updateSellForm").checkValidity();
-    var idSell = $("#idSell")[0].value;
+    var idSell = $("#idSellUpdate")[0].value;
     if (formValid) {
         $.ajax({
             url: "update_sell/" + idSell,
@@ -45,11 +52,24 @@ function update_sell() {
                 window.location.reload();
             }
         });
+    } else {
+        var errorMsgArea = document.getElementById("error_msg_update");
+        var textToAdd = document.createTextNode("Your sell needs a name and a product.");
+        if (errorMsgArea.hasChildNodes()) {
+            errorMsgArea.removeChild(errorMsgArea.lastChild);
+        }
+        errorMsgArea.appendChild(textToAdd);
     }
 }
 
-function delete_sell(it) {
+function get_delete_data(it) {
     var idSell = it.getAttribute("data-idSell");
+    var modalBody = $("#deleteSellModal");
+    modalBody.find("#idSellDelete")[0].value = idSell;
+}
+
+function delete_sell() {
+    var idSell = $("#idSellDelete")[0].value;
     $.ajax({
         url: "delete_sell/" + idSell,
         type: "DELETE",

@@ -1,9 +1,11 @@
-$(document).ready(function() {
-  
-});
-
-function delete_product(it) {
+function get_delete_data(it) {
     var idProduct = it.getAttribute('data-idProduct');
+    var modalBody = $("#deleteProductModal");
+    modalBody.find("#idProductDelete")[0].value = idProduct;
+}
+
+function delete_product() {
+    var idProduct = $("#idProductDelete")[0].value;
     $.ajax({
         url: 'delete_product/' + idProduct,
         type: 'DELETE',
@@ -16,7 +18,6 @@ function delete_product(it) {
 
 function create_product() {
     var formValid = document.getElementById("createProductForm").checkValidity();
-
     if (formValid) {
         $.ajax({
             url: 'create_product',
@@ -30,6 +31,13 @@ function create_product() {
                 window.location.reload();
             }
         });
+    } else {
+        var errorMsgArea = document.getElementById("error_msg_create");
+        var textToAdd = document.createTextNode("You need to add a name to your product.");
+        if (errorMsgArea.hasChildNodes()) {
+            errorMsgArea.removeChild(errorMsgArea.lastChild);
+        }
+        errorMsgArea.appendChild(textToAdd);
     }
 }
 
@@ -39,7 +47,7 @@ function get_update_data(it) {
     var price = it.getAttribute('data-price');
     var stock = it.getAttribute('data-stock');
     var modalBody = $('#updateProductModal');
-    modalBody.find('#idProduct')[0].value = idProduct;
+    modalBody.find('#idProductUpdate')[0].value = idProduct;
     modalBody.find('#id_name')[0].value = name;
     modalBody.find('#id_price')[0].value = price;
     modalBody.find('#id_stockpile')[0].value = stock;
@@ -47,7 +55,7 @@ function get_update_data(it) {
 
 function update_product() {
     var formValid = document.getElementById("updateProductForm").checkValidity();
-    var idProduct = $('#idProduct')[0].value;
+    var idProduct = $('#idProductUpdate')[0].value;
     if (formValid) {
         $.ajax({
             url: 'update_product/' + idProduct,
@@ -61,5 +69,12 @@ function update_product() {
                 window.location.reload();
             }
         });
+    } else {
+        var errorMsgArea = document.getElementById("error_msg_update");
+        var textToAdd = document.createTextNode("You can't leave a product without name.");
+        if (errorMsgArea.hasChildNodes()) {
+            errorMsgArea.removeChild(errorMsgArea.lastChild);
+        }
+        errorMsgArea.appendChild(textToAdd);
     }
 }

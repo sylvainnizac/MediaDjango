@@ -9,6 +9,9 @@ create your virtual environment and install dependencies
     python -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
+    
+install node and npm depending on your system => https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+    npm install --no-save
 
 then create database and load the initial datas
 
