@@ -1,1 +1,1 @@
-[{"model": "products.product", "pk": 1, "fields": {"name": "apple", "price": 1.0, "stockpile": 17}}, {"model": "products.product", "pk": 2, "fields": {"name": "orange", "price": 2.0, "stockpile": 8}}]
+[{"model": "products.product", "pk": 1, "fields": {"name": "apple", "price": 1.0, "stockpile": 17, "can_be_sold": true}}, {"model": "products.product", "pk": 2, "fields": {"name": "orange", "price": 2.0, "stockpile": 8, "can_be_sold": true}}, {"model": "products.product", "pk": 3, "fields": {"name": "not to be sold", "price": 0.0, "stockpile": 0, "can_be_sold": false}}]
