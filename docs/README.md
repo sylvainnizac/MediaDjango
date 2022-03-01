@@ -1,7 +1,3 @@
-# Mediatree Challenge
-
-https://gitlab.mediatree.fr/-/snippets/67
-
 # how to start the project
 
 create your virtual environment and install dependencies
@@ -11,6 +7,8 @@ create your virtual environment and install dependencies
     pip install -r requirements.txt
     
 install node and npm depending on your system => https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+and install dependencies through npm
 
     npm install --no-save
 
