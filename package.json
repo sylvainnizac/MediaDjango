@@ -2,5 +2,27 @@
   "dependencies": {
     "@popperjs/core": "^2.11.2",
     "jquery": "^3.6.0"
-  }
+  },
+  "name": "mediadjango",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "python manage.py runserver"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvainnizac/MediaDjango.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sylvainnizac/MediaDjango/issues"
+  },
+  "homepage": "https://github.com/sylvainnizac/MediaDjango#readme",
+  "description": ""
 }
